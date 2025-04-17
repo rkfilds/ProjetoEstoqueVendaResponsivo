@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Produtos</h1>
+        <form method="get">
+            <div class="form-row">
+		<div class="col-md-4">
+                    <input type="text" class="form-control" name="produto" placeholder="Filtrar por produto">
+                </div>    
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="marca" placeholder="Filtrar por marca">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="cor" placeholder="Filtrar por cor">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>ID</th>
+		    <th>Produto</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+		    <th>Material</th>
+                    <th>Cor</th>
+                    <th>Tamanho</th>
+		    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Data de Entrada</th>
+                    <th>Imagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos.items %}
+                    <tr>
+                        <td>{{ produto.id }}</td>
+			<td>{{ produto.produto }}</td>    
+                        <td>{{ produto.marca }}</td>
+                        <td>{{ produto.modelo }}</td>
+			<td>{{ produto.material }}</td>    
+                        <td>{{ produto.cor }}</td>
+                        <td>{{ produto.tamanho }}</td>
+			<td>{{ produto.quantidade }}</td>
+                        <td>{{ produto.valor }}</td>
+                        <td>{{ produto.data_entrada }}</td>
+                        <td><img src="/static/images/{{ produto.imagem }}" width="50"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <a href="/?page={{ produtos.prev_num }}" class="btn btn-secondary" {% if not produtos.has_prev %} disabled {% endif %}>Anterior</a>
+            <a href="/?page={{ produtos.next_num }}" class="btn btn-secondary" {% if not produtos.has_next %} disabled {% endif %}>Próximo</a>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

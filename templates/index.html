@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Estoque e Venda</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h1 class="mb-4">Produtos</h1>
+
+        <button class="btn btn-primary mb-3" onclick="window.location.href='/novo_produto'">Adicionar Produto</button>
+
+        <form method="get" action="/" class="form-inline mb-3">
+            <input type="text" name="busca" class="form-control mr-2" placeholder="Buscar produto..." value="{{ busca }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        <!-- Formulário isolado para venda -->
+        <form action="/venda" method="post" id="form-venda"></form>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Material</th>
+                        <th>Cor</th>
+                        <th>Tamanho</th>
+                        <th>Quantidade</th>
+                        <th>Valor</th>
+                        <th>Data de Entrada</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if produtos %}
+                    {% for produto in produtos %}
+                    <tr>
+                        <td>{{ produto.id }}</td>
+                        <td>{{ produto.produto }}</td>
+                        <td>{{ produto.marca }}</td>
+                        <td>{{ produto.modelo }}</td>
+                        <td>{{ produto.material }}</td>
+                        <td>{{ produto.cor }}</td>
+                        <td>{{ produto.tamanho }}</td>
+                        <td>
+                            <input type="number" name="quantidade_{{ produto.id }}" class="form-control form-control-sm" min="0" placeholder="0" form="form-venda">
+                            <input type="hidden" name="produto_id[]" value="{{ produto.id }}" form="form-venda">
+                            <div class="text-muted small mt-1">Estoque: {{ produto.quantidade }}</div>
+                        </td>
+                        <td>R$ {{ produto.valor }}</td>
+                        <td>{{ produto.data_entrada.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="/editar_produto/{{ produto.id }}" class="btn btn-warning btn-sm mr-1">Editar</a>
+                                <form action="/excluir_produto/{{ produto.id }}" method="post" onsubmit="return confirm('Deseja excluir este item?');">
+                                    <button class="btn btn-danger btn-sm" type="submit">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted">Nenhum produto encontrado.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <button type="submit" class="btn btn-success" form="form-venda">Registrar Venda</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

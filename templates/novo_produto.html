@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Produto</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h2>Adicionar Novo Produto</h2>
+        <form action="/adicionar_produto" method="post">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="produto">Produto</label>
+                    <input type="text" name="produto" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="marca">Marca</label>
+                    <input type="text" name="marca" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" name="modelo" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="material">Material</label>
+                    <input type="text" name="material" class="form-control" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="cor">Cor</label>
+                    <input type="text" name="cor" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="tamanho">Tamanho</label>
+                    <input type="text" name="tamanho" class="form-control" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" name="quantidade" class="form-control" min="0" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="valor">Valor</label>
+                    <input type="number" name="valor" class="form-control" step="0.01" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="data_entrada">Data de Entrada</label>
+                <input type="date" name="data_entrada" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Salvar Produto</button>
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
