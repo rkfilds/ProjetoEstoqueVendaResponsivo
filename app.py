@@ -21,15 +21,6 @@ migrate = Migrate(app,db)
 # Modelo Produto
 class Produto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    marca = db.Column(db.String(50))
-    modelo = db.Column(db.String(50))
-    cor = db.Column(db.String(20))
-    tamanho = db.Column(db.String(10))
-    quantidade = db.Column(db.Integer, default=0)
-    valor = db.Column(db.Integer)
-    data_entrada = db.Column(db.DateTime, default=datetime.utcnow)
-    imagem = db.Column(db.String(120))
-    id = db.Column(db.Integer, primary_key=True)
     produto = db.Column(db.String(50))
     marca = db.Column(db.String(50))
     modelo = db.Column(db.String(50))
@@ -90,7 +81,6 @@ def adicionar_produto():
         material = request.form['material']
         cor = request.form['cor']
         tamanho = request.form['tamanho']
-        quantidade = int(request.form.get('quantidade', 0) or 0)
         valor = float(request.form['valor'])
         quantidade = int(request.form['quantidade'])
         data_entrada_str = request.form['data_entrada']
@@ -110,21 +100,7 @@ def adicionar_produto():
             produto_existente.quantidade += quantidade
             produto_existente.data_entrada = data_entrada
         else:
-            produto_existente = Produto.query.filter_by(
-            marca=marca,
-            modelo=modelo,
-            cor=cor,
-            tamanho=tamanho
-        ).first()
-
-        if produto_existente:
-            produto_existente.quantidade += quantidade
-            produto_existente.data_entrada = data_entrada
-            db.session.commit()
-            return redirect(url_for('index'))
-
-        novo_produto = Produto(
-            quantidade=quantidade,
+            novo_produto = Produto(
                 produto=produto,
                 marca=marca,
                 modelo=modelo,
